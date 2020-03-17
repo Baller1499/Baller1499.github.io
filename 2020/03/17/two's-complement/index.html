@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Two&#39;s-complement | 小困Baller</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="为什么要使用补码进行储存首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以一字节(1字节(byte) &#x3D; 8位(bit))为例)： +7  0000 0111 -7  1111 1001 我们把0000 0111叫做+7的位组合(bit pattern),当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所">
+  <meta name="description" content="为什么要使用补码进行储存首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以1字节(1字节(8位)为例)： 12+7  0000 0111-7  1111 1001  我们把0000 0111叫做+7的位组合(bit pattern),当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Two&#39;s-complement">
 <meta property="og:url" content="http://yoursite.com/2020/03/17/two's-complement/index.html">
 <meta property="og:site_name" content="小困Baller">
-<meta property="og:description" content="为什么要使用补码进行储存首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以一字节(1字节(byte) &#x3D; 8位(bit))为例)： +7  0000 0111 -7  1111 1001 我们把0000 0111叫做+7的位组合(bit pattern),当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所">
+<meta property="og:description" content="为什么要使用补码进行储存首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以1字节(1字节(8位)为例)： 12+7  0000 0111-7  1111 1001  我们把0000 0111叫做+7的位组合(bit pattern),当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-17T10:48:11.240Z">
-<meta property="article:modified_time" content="2020-03-17T13:04:58.748Z">
+<meta property="article:modified_time" content="2020-03-17T13:24:03.826Z">
 <meta property="article:author" content="小困Baller">
 <meta property="article:tag" content="个人博客">
 <meta name="twitter:card" content="summary">
@@ -187,10 +187,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="为什么要使用补码进行储存"><a href="#为什么要使用补码进行储存" class="headerlink" title="为什么要使用补码进行储存"></a>为什么要使用<strong>补码</strong>进行储存</h2><p>首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以一字节(1字节(byte) = 8位(bit))为例)：</p>
-<p>+7  0000 0111</p>
-<p>-7  1111 1001</p>
-<p>我们把0000 0111叫做+7的位组合(bit pattern),当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解使用补码的储存原理。下面将会对补码及其他方法进行解释(为了方便理解下文均以一字节为例)。</p>
+        <h2 id="为什么要使用补码进行储存"><a href="#为什么要使用补码进行储存" class="headerlink" title="为什么要使用补码进行储存"></a>为什么要使用<strong>补码</strong>进行储存</h2><p>首先，需要知道机器只认识0和1，即二进制。一旦数据被机器处理，就会变成一串0和1组合的数字，比如(这里我们以1字节(1字节(8位)为例)：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">7</span>  <span class="number">0000</span> <span class="number">0111</span></span><br><span class="line"><span class="number">-7</span>  <span class="number">1111</span> <span class="number">1001</span></span><br></pre></td></tr></table></figure>
+
+<p>我们把0000 0111叫做+7的<strong>位组合(bit pattern)</strong>,当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解使用补码的储存原理。下面将会对补码及其他方法进行解释(为了方便理解，下文均以1字节为例)。</p>
 <h3 id="机器储存有符号整数的方法"><a href="#机器储存有符号整数的方法" class="headerlink" title="机器储存有符号整数的方法"></a>机器储存<strong>有符号整数</strong>的方法</h3><ol>
 <li>符号量(sign-magnitude)表示法</li>
 <li>二进制反码(one’s-complement)</li>
@@ -198,69 +198,21 @@
 </ol>
 <h3 id="符号量-sign-magnitude-表示法"><a href="#符号量-sign-magnitude-表示法" class="headerlink" title="符号量(sign-magnitude)表示法"></a><strong>符号量</strong>(sign-magnitude)表示法</h3><p><strong>表示范围：-127 ~ +127</strong></p>
 <p>对于有符号整数的位组合自然需要有一个地方的数据用来说明数据的符号，即 ‘+’、’-‘，符号量表示法就很直接的把最高位作为符号位：符号位为1表示为负数，符号位为0表示为整数，这需要注意一下，符号位只是用来判断正负，并不参与计算，即：</p>
-<p>如果使用符号量表示法，那么1000 0111就是-7的位组合，而不是-135的位组合</p>
+<p>如果使用符号量表示法，那么1000 0111就是-7的位组合，而不是-135的位组合。</p>
 <p>当然，我们并没有使用这种方法储存数据，因为这种方法有个缺点：1000 0000是-0的位组合，0000 0000是+0的位组合，这里出现了两个0，这样是很容易混淆的，而且两个位组合用来表示了同一个值，有些浪费。</p>
 <h3 id="二进制反码-one’s-complement"><a href="#二进制反码-one’s-complement" class="headerlink" title="二进制反码(one’s-complement)"></a>二进制<strong>反码</strong>(one’s-complement)</h3><p><strong>表示范围：-127 ~ +127</strong></p>
 <p>这种方法是通过对正数的位组合进行取反得到负数的位组合。例如：+7的位组合是0000 0111，那么-7的位组合就是1111 1000，这看起来和使用补码得到的位组合很相似了，但是还是出现了和符号量表示法一样的问题，这种方法也有一个-0：1111 1111。下面就该介绍补码了。</p>
 <h3 id="二进制补码-two’s-complement"><a href="#二进制补码-two’s-complement" class="headerlink" title="二进制补码(two’s-complement)"></a>二进制<strong>补码</strong>(two’s-complement)</h3><p><strong>表示范围：-128 ~ +127</strong></p>
 <p>这种方法避免了上述的问题，是当今最常用的方法。补码确定正负的方式和符号量的方式相同，以高阶位作为符号位，区别在与如何确定负值：</p>
-<p>从一个9位组合1 0000 0000减去一个负数的位组合，结果是该负数的量。</p>
+<p><strong>从一个9位组合1 0000 0000减去一个负数的位组合，结果是该负数的量。</strong></p>
 <p>这里需要特别理解<strong>负数的量</strong>的含义：一个数除了需要确定正负号外，还需要确定这个数的量,即这个数的<strong>绝对值的大小</strong>，这里的负数的量指的就是这个负数的绝对值大小。例如：</p>
 <p>1000 0000通过最高位的值可以知道是个负数，现在我们需要确定这个负数的量，利用上述的方法：1 0000 0000 - 1000 0000 = 1000 0000 (128),所以1000 0000就是-128的位组合。</p>
-<p>如果你已经知道了一个正数的位组合，那么通过按位取反再加一的方式也可以得出相同的结果，例如：</p>
-<p>+1  0000 0001<br>-1  1111 1111</p>
-<h3 id="整数转二进制程序"><a href="#整数转二进制程序" class="headerlink" title="整数转二进制程序"></a>整数转二进制程序</h3><p>下面的C程序可以通过输入一个整数，打印出其位组合，因为在C语言中int默认是signed，即有符号整型，所以你输入负数也可以查看其位组合。</p>
-<pre><code class="c"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span>
-<span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span>
+<p>如果你已经知道了一个正数的位组合，那么通过按位取反再加1的方式也可以得出相同的结果，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">1</span>  <span class="number">0000</span> <span class="number">0001</span></span><br><span class="line"><span class="number">-1</span>  <span class="number">1111</span> <span class="number">1111</span></span><br></pre></td></tr></table></figure>
+<h3 id="整数转二进制程序"><a href="#整数转二进制程序" class="headerlink" title="整数转二进制程序"></a>整数转二进制程序</h3><p>下面的C程序可以通过输入一个整数，打印出其位组合，因为在C语言中int默认是signed，即有符号整型，所以你输入负数也可以查看其位组合。<br>这里还需说明一下：如何表示有符号整数取决于硬件，为不是C语言。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;limits.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">itobs</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">char</span>*)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_bstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>*)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	char bin_str[CHAR_BIT * sizeof(int) + 1];</span><br><span class="line">	<span class="keyword">int</span> number;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"Enter integers and see them in binary."</span>);</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">"Non-numberic input terminates program."</span>);</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;number) == <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		itobs(number, bin_str);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d is "</span>, number);</span><br><span class="line">		show_bstr(bin_str);</span><br><span class="line">		<span class="built_in">putchar</span>(<span class="string">'\n'</span>);</span><br><span class="line">	 &#125; </span><br><span class="line">	 <span class="built_in">puts</span>(<span class="string">"Bye"</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">itobs</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span>* ps)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="built_in">size</span> = CHAR_BIT * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="built_in">size</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--, n &gt;&gt;= <span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		ps[i] = (<span class="number">01</span> &amp; n) + <span class="string">'0'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	ps[<span class="built_in">size</span>] = <span class="string">'\0'</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> ps;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_bstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (str[i])</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">putchar</span>(str[i]);</span><br><span class="line">		<span class="keyword">if</span> (++i % <span class="number">4</span> == <span class="number">0</span> &amp;&amp; str[i])</span><br><span class="line">			<span class="built_in">putchar</span>(<span class="string">' '</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<span class="function"><span class="keyword">char</span>* <span class="title">itobs</span><span class="params">(<span class="keyword">int</span>, <span class="keyword">char</span>*)</span></span>;
-<span class="function"><span class="keyword">void</span> <span class="title">show_bstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>*)</span></span>;
-
-<span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">void</span>)</span></span>
-<span class="function"></span>{
-    char bin_str[CHAR_BIT * sizeof(int) + 1];
-    <span class="keyword">int</span> number;
-
-    <span class="built_in">puts</span>(<span class="string">"Enter integers and see them in binary."</span>);
-    <span class="built_in">puts</span>(<span class="string">"Non-numberic input terminates program."</span>);
-    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;number) == <span class="number">1</span>)
-    {
-        itobs(number, bin_str);
-        <span class="built_in">printf</span>(<span class="string">"%d is "</span>, number);
-        show_bstr(bin_str);
-        <span class="built_in">putchar</span>(<span class="string">'\n'</span>);
-     } 
-     <span class="built_in">puts</span>(<span class="string">"Bye"</span>);
-
-    <span class="keyword">return</span> <span class="number">0</span>;
-}
-
-<span class="function"><span class="keyword">char</span>* <span class="title">itobs</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">char</span>* ps)</span></span>
-<span class="function"></span>{
-    <span class="keyword">int</span> i;
-    <span class="keyword">const</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="built_in">size</span> = CHAR_BIT * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);
-
-    <span class="keyword">for</span> (i = <span class="built_in">size</span> - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--, n &gt;&gt;= <span class="number">1</span>)
-    {
-        ps[i] = (<span class="number">01</span> &amp; n) + <span class="string">'0'</span>;
-    }
-    ps[<span class="built_in">size</span>] = <span class="string">'\0'</span>;
-
-    <span class="keyword">return</span> ps;
-}
-
-<span class="function"><span class="keyword">void</span> <span class="title">show_bstr</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* str)</span></span>
-<span class="function"></span>{
-    <span class="keyword">int</span> i = <span class="number">0</span>;
-
-    <span class="keyword">while</span> (str[i])
-    {
-        <span class="built_in">putchar</span>(str[i]);
-        <span class="keyword">if</span> (++i % <span class="number">4</span> == <span class="number">0</span> &amp;&amp; str[i])
-            <span class="built_in">putchar</span>(<span class="string">' '</span>);
-    }
-}
-</code></pre>
+<hr>
 
       
 
