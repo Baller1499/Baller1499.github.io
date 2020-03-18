@@ -16,7 +16,7 @@
 <meta property="og:description" content="为什么要使用补码进行储存首先，需要知道计算机只认识0和1，即二进制。一旦数据被计算机处理，就会变成一串0和1组合的数字，比如(这里我们以1字节(1字节(8位)为例)： 12+7  0000 0111-7  1111 1001  我们把0000 0111叫做+7的位组合(bit pattern),并规定最左侧位为高阶位(high-order bit),最右侧位为低阶位(low-order bit)，">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-03-17T10:48:11.240Z">
-<meta property="article:modified_time" content="2020-03-18T02:48:06.067Z">
+<meta property="article:modified_time" content="2020-03-18T02:50:03.694Z">
 <meta property="article:author" content="小困Baller">
 <meta property="article:tag" content="个人博客">
 <meta name="twitter:card" content="summary">
@@ -190,7 +190,7 @@
         <h2 id="为什么要使用补码进行储存"><a href="#为什么要使用补码进行储存" class="headerlink" title="为什么要使用补码进行储存"></a>为什么要使用<strong>补码</strong>进行储存</h2><p>首先，需要知道计算机只认识0和1，即二进制。一旦数据被计算机处理，就会变成一串0和1组合的数字，比如(这里我们以1字节(1字节(8位)为例)：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">+<span class="number">7</span>  <span class="number">0000</span> <span class="number">0111</span></span><br><span class="line"><span class="number">-7</span>  <span class="number">1111</span> <span class="number">1001</span></span><br></pre></td></tr></table></figure>
 
-<p>我们把0000 0111叫做+7的<strong>位组合(bit pattern)</strong>,并规定最左侧位为高阶位(high-order bit),最右侧位为低阶位(low-order bit)，当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解使用补码的储存原理。下面将会对补码及其他方法进行解释(为了方便理解，下文均以1字节为例)。</p>
+<p>我们把0000 0111叫做+7的<strong>位组合(bit pattern)</strong>,并规定最左侧位为<strong>高阶位(high-order bit)</strong>,最右侧位为<strong>低阶位(low-order bit)</strong>，当然1111 1001就是-7的位组合了。你可能理解+7的位组合，但对-7的位组合有所困惑，因为这里需要理解使用补码的储存原理。下面将会对补码及其他方法进行解释(为了方便理解，下文均以1字节为例)。</p>
 <h3 id="机器储存有符号整数的方法"><a href="#机器储存有符号整数的方法" class="headerlink" title="机器储存有符号整数的方法"></a>机器储存<strong>有符号整数</strong>的方法</h3><ol>
 <li>符号量(sign-magnitude)表示法</li>
 <li>二进制反码(one’s-complement)</li>
